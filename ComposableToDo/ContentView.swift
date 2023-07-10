@@ -12,13 +12,6 @@ struct ContentView: View {
         NavigationView {
             List {
                 TodoView()
-                //            ForEachStore(
-                //                self.store.scope(state: \.filteredTodos, action: Todos.Action.todo(id:action:))
-                //            ) {
-                //                TodoView(store: $0)
-                //            }
-                //            .onDelete { viewStore.send(.delete($0)) }
-                //            .onMove { viewStore.send(.move($0, $1)) }
             }
             .navigationTitle("Todos")
             .navigationBarItems(
