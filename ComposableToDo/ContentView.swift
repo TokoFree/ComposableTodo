@@ -12,6 +12,7 @@ struct ContentView: View {
         NavigationView {
             List {
                 TodoView()
+                // TODO: iterate over stored todos
                 //            ForEachStore(
                 //                self.store.scope(state: \.filteredTodos, action: Todos.Action.todo(id:action:))
                 //            ) {
@@ -23,7 +24,6 @@ struct ContentView: View {
             .navigationTitle("Todos")
             .navigationBarItems(
                 trailing: HStack(spacing: 20) {
-                    EditButton()
                     Button("Clear Completed") {
                         // TODO: add clear action
                     }
