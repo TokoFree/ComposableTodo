@@ -5,27 +5,40 @@
 //  Created by ferico.samuel on 05/07/23.
 //
 
+import ComposableArchitecture
 import SwiftUI
 
+struct Todo: ReducerProtocol {
+  struct State: Equatable, Identifiable {
+    @BindingState var description = ""
+    let id: UUID
+    @BindingState var isComplete = false
+  }
+
+  enum Action: BindableAction, Equatable, Sendable {
+    case binding(BindingAction<State>)
+  }
+
+  var body: some ReducerProtocol<State, Action> {
+    BindingReducer()
+  }
+}
+
 struct TodoView: View {
-    @State var isComplete = false
-    @State var descrption = ""
+    let store: StoreOf<Todo>
     
     var body: some View {
-        HStack {
-            Button {
-                // TODO: bind completion
-                isComplete.toggle()
-            } label: {
-                // TODO: ke viewStore
-                Image(systemName: isComplete ? "checkmark.square" : "square")
+        WithViewStore(store) { $0 } content: { viewStore in
+            HStack {
+                Button {
+                    viewStore.$isComplete.wrappedValue.toggle()
+                } label: {
+                    Image(systemName: viewStore.isComplete ? "checkmark.square" : "square")
+                }
+                .buttonStyle(.plain)
+                TextField("Untitled Todo", text: viewStore.$description)
             }
-            .buttonStyle(.plain)
-            
-            // TODO: bind ke viewStore
-            TextField("Untitled Todo", text: $descrption)
+            .foregroundColor(viewStore.isComplete ? .gray : nil)
         }
-        // TODO: ke viewStore
-        .foregroundColor(isComplete ? .gray : nil)
     }
 }
